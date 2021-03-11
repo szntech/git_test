@@ -10,7 +10,7 @@ function Companys(props) {
 
         if (props.suppliers.length === 0) {
 
-            fetch(`http://localhost:3002/Suppliers`, {
+            fetch(`https://wbvp1hm9n1.execute-api.us-east-1.amazonaws.com/dev/Suppliers`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
