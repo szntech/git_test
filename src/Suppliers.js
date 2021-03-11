@@ -10,7 +10,7 @@ function Companys(props) {
 
         if (props.suppliers.length === 0) {
 
-            fetch(`https://wbvp1hm9n1.execute-api.us-east-1.amazonaws.com/dev/Suppliers`, {
+            fetch(`https://${global.config.host}/Suppliers`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'

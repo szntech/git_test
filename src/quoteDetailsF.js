@@ -51,7 +51,7 @@ function QuoteDetailsF(props) {
 
 
 
-            fetch(`http://localhost:3002/catalog`, {
+            fetch(`http://${global.config.host}/catalog`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
