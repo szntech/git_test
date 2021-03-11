@@ -11,9 +11,9 @@ function NewCustomer(props) {
 
     const mySubmitHandler = (event) => {
         event.preventDefault();
+      
 
-
-        fetch(`https://wbvp1hm9n1.execute-api.us-east-1.amazonaws.com/dev/customerDetail`, {
+        fetch(`https://${global.config.host}/customerDetail`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
