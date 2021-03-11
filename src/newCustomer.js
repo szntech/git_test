@@ -13,7 +13,7 @@ function NewCustomer(props) {
         event.preventDefault();
 
 
-        fetch(`http://localhost:3002/customerDetail`, {
+        fetch(`https://7qvqyv8y7f.execute-api.us-east-1.amazonaws.com/dev/customerDetail`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
