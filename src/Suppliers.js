@@ -10,7 +10,7 @@ function Companys(props) {
 
         if (props.suppliers.length === 0) {
 
-            fetch(`https://${global.config.host}/Suppliers`, {
+            fetch(`${global.config.host}/Suppliers`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'

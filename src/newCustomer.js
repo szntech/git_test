@@ -13,7 +13,7 @@ function NewCustomer(props) {
         event.preventDefault();
       
 
-        fetch(`https://${global.config.host}/customerDetail`, {
+        fetch(`${global.config.host}/customerDetail`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -28,7 +28,7 @@ const id=res[0].insertId;
 
                 console.log(temp,'temp')
 
-                props.setCustomerInfo(data)
+                props.setCustomerInfo(temp)
 
                 props.setEdit('complete')
 

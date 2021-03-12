@@ -28,6 +28,7 @@ function Quotes(props) {
     const [catalog, setCatalog] = useState([]);
     let [counter, setCounter] = useState(1);
     let [supplierSelected, setSupplierSelected] = useState(null);
+    let [quoteNumber, setQuoteNumber] = useState(null);
     let [customerInfo, setCustomerInfo] = useState({ companyId:null,companyName: "", zipcode: null, firstName: "",lastName:"", phoneNumber: null,cellNumber:null, state: "", email: "", city: "" });
 
     let tabDetails = "active";
@@ -38,13 +39,39 @@ function Quotes(props) {
 
 
     let tabContent;
+ 
+    const saveQuote = (type) => {
+        
+        if(type==="update"&&quoteNumber===null){
+            type="insert";
+        }
+
+        fetch(`${global.config.host}/savequote`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ quoteDetails,relatedCustomer:customerInfo.companyId,tier:customerTier.multiplier, type: type, quoteNum: quoteNumber })
+        }).then(res => res.json())
+            .then(res => {
+                console.log(res, 'savequote')
+    
+                if (res.type === "insert") {
+                    setQuoteNumber(res.query[0].insertId)
+                }
+    
+    
+    
+    
+            });
+        }
     if (tabType === "quoteDetails") {
         tabDetails = "active";
         tabCustInfo = null;
         tabShipInfo = null;
         tabFileUpload = null;
         tabNotes = null;
-        tabContent = <QuoteDetails supplierSelected={supplierSelected} setSupplierSelected={setSupplierSelected} counter={counter} setCounter={setCounter} catalog={catalog} setCatalog={setCatalog} customerTier={customerTier} totalPrice={totalPrice} quoteDetails={quoteDetails} setQuoteDetails={setQuoteDetails}></QuoteDetails>
+        tabContent = <QuoteDetails supplierSelected={supplierSelected} saveQuote={saveQuote} setSupplierSelected={setSupplierSelected} counter={counter} setCounter={setCounter} catalog={catalog} setCatalog={setCatalog} customerTier={customerTier} totalPrice={totalPrice} quoteDetails={quoteDetails} setQuoteNumber setQuoteDetails={setQuoteDetails}></QuoteDetails>
     } else if (tabType === "cutomerInfo") {
         tabDetails = null;
         tabCustInfo = "active";
@@ -77,6 +104,11 @@ function Quotes(props) {
     }
 
 
+
+
+
+
+ 
     useEffect(() => {
         let count = 0
         quoteDetails.forEach((detail) => {

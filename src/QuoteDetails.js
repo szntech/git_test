@@ -60,7 +60,7 @@ function QuoteDetails(props) {
         if (props.quoteNum > 0) {
 
 
-            fetch(`http://localhost:3002/quoteDetail?id=${props.quoteNum}`, {
+            fetch(`https://localhost:3002/quoteDetail?id=${props.quoteNum}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'

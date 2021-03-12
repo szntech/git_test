@@ -134,7 +134,7 @@ function SideNotePanel(props) {
                     </div>
                 </div>
 
-                <SaveQuote {...props.quoteDetails}></SaveQuote>
+                <SaveQuote saveQuote={props.saveQuote}></SaveQuote>
 
             </div>
 

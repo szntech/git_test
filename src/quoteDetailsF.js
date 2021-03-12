@@ -51,7 +51,7 @@ function QuoteDetailsF(props) {
 
 
 
-            fetch(`http://${global.config.host}/catalog`, {
+            fetch(`${global.config.host}/catalog`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -393,7 +393,7 @@ detail.description=found.description;
                         >Add a new row</span>
                     </div>
                 </div>
-                <SideNotePanel totalPrice={totalPrice} quoteDetails={{ quoteDetails: quoteDetails, customerId: "4", tier: "1.5" }} />
+                <SideNotePanel totalPrice={totalPrice} saveQuote={props.saveQuote} />
             </div>
         </div>
 

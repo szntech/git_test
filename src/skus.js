@@ -9,7 +9,7 @@ function Skus(props) {
 
         if(props.supplierSelected!==null){
 
-        fetch(`http://${global.config.host}/skus`, {
+        fetch(`${global.config.host}/skus`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
