@@ -15,7 +15,7 @@ function Customers(props) {
   useEffect(() => {
 
     
-    fetch(`http://localhost:3002/customers`, {
+    fetch(`${global.config.host}/customers`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
