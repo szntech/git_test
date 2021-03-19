@@ -9,6 +9,29 @@ import { faCoffee, fas, faTimes, faHome, faUsers, faCaretDown, faPlus, faSearch,
 
 function Customers(props) {
 
+  const [customers, setCustomers] = useState([]);
+
+
+  useEffect(() => {
+
+    
+    fetch(`http://localhost:3002/customers`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+
+    }).then(res => res.json())
+      .then(res => {
+
+        console.log(res, 'customers')
+        setCustomers(res)
+
+      })
+
+  },[])
+
+
   return (<>
 
     <section className="customer-section">
@@ -43,118 +66,24 @@ function Customers(props) {
               </div>
               {/* customer Items */}
               <div className="side-list-item customer-item">
-                {/* customer 1 */}
-                <div
-                  className="side-list-item customer-item py-3 px-2 border-top d-flex align-items-center"
-                >
-                  <div className="ms-3">
-                    <h4>Name001</h4>
-                    <p className="date w-100 d-block">Jan 13, 2021</p>
-                  </div>
-                  <div className="dots ms-auto align-self-start">
-                    <a href="javascript:void(0)">
-                      <i className="fas fa-ellipsis-h"></i
-                      ></a>
-                  </div>
-                </div>
-                {/* customer 2 */}
-                <div
-                  className="side-list-item customer-item py-3 px-2 border-top d-flex align-items-center"
-                >
-                  <div className="ms-3">
-                    <h4>Name001</h4>
-                    <p className="date w-100 d-block">Jan 13, 2021</p>
-                  </div>
-                  <div className="dots ms-auto align-self-start">
-                    <a href="javascript:void(0)">
-                      <i className="fas fa-ellipsis-h"></i
-                      ></a>
-                  </div>
-                </div>
-                {/* customer 3 */}
-                <div
-                  className="side-list-item customer-item py-3 px-2 border-top d-flex align-items-center"
-                >
-                  <div className="ms-3">
-                    <h4>Name001</h4>
-                    <p className="date w-100 d-block">Jan 13, 2021</p>
-                  </div>
-                  <div className="dots ms-auto align-self-start">
-                    <a href="javascript:void(0)">
-                      <i className="fas fa-ellipsis-h"></i
-                      ></a>
-                  </div>
-                </div>
-                {/* customer 4 */}
-                <div
-                  className="side-list-item customer-item py-3 px-2 border-top d-flex align-items-center"
-                >
-                  <div className="ms-3">
-                    <h4>Name001</h4>
-                    <p className="date w-100 d-block">Jan 13, 2021</p>
-                  </div>
-                  <div className="dots ms-auto align-self-start">
-                    <a href="javascript:void(0)">
-                      <i className="fas fa-ellipsis-h"></i
-                      ></a>
-                  </div>
-                </div>
-                {/* customer 5 */}
-                <div
-                  className="side-list-item customer-item py-3 px-2 border-top d-flex align-items-center"
-                >
-                  <div className="ms-3">
-                    <h4>Name001</h4>
-                    <p className="date w-100 d-block">Jan 13, 2021</p>
-                  </div>
-                  <div className="dots ms-auto align-self-start">
-                    <a href="javascript:void(0)">
-                      <i className="fas fa-ellipsis-h"></i
-                      ></a>
-                  </div>
-                </div>
-                {/* customer 6 */}
-                <div
-                  className="side-list-item customer-item py-3 px-2 border-top d-flex align-items-center"
-                >
-                  <div className="ms-3">
-                    <h4>Name001</h4>
-                    <p className="date w-100 d-block">Jan 13, 2021</p>
-                  </div>
-                  <div className="dots ms-auto align-self-start">
-                    <a href="javascript:void(0)">
-                      <i className="fas fa-ellipsis-h"></i
-                      ></a>
-                  </div>
-                </div>
-                {/* customer 7 */}
-                <div
-                  className="side-list-item customer-item py-3 px-2 border-top d-flex align-items-center"
-                >
-                  <div className="ms-3">
-                    <h4>Name001</h4>
-                    <p className="date w-100 d-block">Jan 13, 2021</p>
-                  </div>
-                  <div className="dots ms-auto align-self-start">
-                    <a href="javascript:void(0)">
-                      <i className="fas fa-ellipsis-h"></i
-                      ></a>
-                  </div>
-                </div>
-                {/* customer 8 */}
-                <div
-                  className="side-list-item customer-item py-3 px-2 border-top d-flex align-items-center"
-                >
-                  <div className="ms-3">
-                    <h4>Name001</h4>
-                    <p className="date w-100 d-block">Jan 13, 2021</p>
-                  </div>
-                  <div className="dots ms-auto align-self-start">
-                    <a href="javascript:void(0)">
-                      <i className="fas fa-ellipsis-h"></i
-                      ></a>
-                  </div>
-                </div>
+
+{customers.map((customer)=>{
+
+return(<div
+className="side-list-item customer-item py-3 px-2 border-top d-flex align-items-center"
+>
+<div className="ms-3">
+  <h4>{customer.CompanyName}</h4>
+  <p className="date w-100 d-block">Jan 13, 2021</p>
+</div>
+<div className="dots ms-auto align-self-start">
+  <a href="javascript:void(0)">
+    <i className="fas fa-ellipsis-h"></i
+    ></a>
+</div>
+</div>)
+})}
+              
               </div>
             </div>
           </div>
