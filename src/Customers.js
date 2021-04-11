@@ -10,11 +10,15 @@ import { faCoffee, fas, faTimes, faHome, faUsers, faCaretDown, faPlus, faSearch,
 function Customers(props) {
 
   const [customers, setCustomers] = useState([]);
+  const [searchResults,setSearchResults]=useState([]);
+  const [selectedCustomer,setSelectedCustomer]= useState(null);
+console.log(selectedCustomer,'selectedCustomer')
 
+const displayCustomers=searchResults.length>0?searchResults:customers;
 
   useEffect(() => {
 
-    
+
     fetch(`${global.config.host}/customers`, {
       method: 'GET',
       headers: {
@@ -29,8 +33,17 @@ function Customers(props) {
 
       })
 
-  },[])
+  }, [])
 
+
+  function handleSearchChange(results) {
+
+    console.log(results)
+
+    const filtered=customers.filter(customer=>customer.CompanyName.includes(results))
+    console.log(filtered,'filtered')
+    setSearchResults(filtered)
+  }
 
   return (<>
 
@@ -58,6 +71,7 @@ function Customers(props) {
                     type="search"
                     name="Seacrh"
                     placeholder="Search Customers"
+                    onChange={(value)=>handleSearchChange(value.target.value)}
                   />
                   <button className="border-0" type="submit">
                     <i className="fas fa-search"></i>
@@ -67,28 +81,28 @@ function Customers(props) {
               {/* customer Items */}
               <div className="side-list-item customer-item">
 
-{customers.map((customer)=>{
+                {displayCustomers.map((customer) => {
 
-return(<div
-className="side-list-item customer-item py-3 px-2 border-top d-flex align-items-center"
->
-<div className="ms-3">
-  <h4>{customer.CompanyName}</h4>
-  <p className="date w-100 d-block">Jan 13, 2021</p>
-</div>
-<div className="dots ms-auto align-self-start">
-  <a href="javascript:void(0)">
-    <i className="fas fa-ellipsis-h"></i
-    ></a>
-</div>
-</div>)
-})}
-              
+                  return (<div onClick={()=>setSelectedCustomer(customer.RelatedCustomer)}
+                    className="side-list-item customer-item py-3 px-2 border-top d-flex align-items-center"
+                  >
+                    <div className="ms-3">
+                      <h4>{customer.CompanyName}</h4>
+                      <p className="date w-100 d-block">Jan 13, 2021</p>
+                    </div>
+                    <div className="dots ms-auto align-self-start">
+                      <a href="javascript:void(0)">
+                        <i className="fas fa-ellipsis-h"></i
+                        ></a>
+                    </div>
+                  </div>)
+                })}
+
               </div>
             </div>
           </div>
           {/* Customers Information */}
-          <CustomersInfo></CustomersInfo>
+          <CustomersInfo selectedCustomer={selectedCustomer}></CustomersInfo>
         </div>
       </div>
     </section>

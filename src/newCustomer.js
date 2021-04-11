@@ -24,7 +24,7 @@ function NewCustomer(props) {
 
 const id=res[0].insertId;
                 console.log(res,'the Customer Response')
-                const temp={companyId:id,...data}
+                const temp={customerId:id,...data}
 
                 console.log(temp,'temp')
 

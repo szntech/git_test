@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {useLocation} from "react-router-dom";
 import "./css/quotes.css";
 import "./css/side-list.css";
 import "./css/navbar.css";
@@ -21,6 +22,7 @@ import FileUpload from "./fileUpload";
 import Notes from "./notes";
 
 function Quotes(props) {
+    const quotenum=new URLSearchParams(useLocation().search).get('quoteNum')
     const [tabType, setTabType] = useState("quoteDetails");
     const [quoteDetails, setQuoteDetails] = useState([]);
     let [customerTier, setCustomerTier] = useState({ multiplier: 1 });
@@ -29,8 +31,8 @@ function Quotes(props) {
     let [counter, setCounter] = useState(1);
     let [supplierSelected, setSupplierSelected] = useState(null);
     let [quoteNumber, setQuoteNumber] = useState(null);
-    let [customerInfo, setCustomerInfo] = useState({ companyId:null,companyName: "", zipcode: null, firstName: "",lastName:"", phoneNumber: null,cellNumber:null, state: "", email: "", city: "" });
-
+    let [customerInfo, setCustomerInfo] = useState({ customerId:null,companyName: "", zipcode: null, firstName: "",lastName:"", phoneNumber: null,cellNumber:null, state: "", email: "", city: "" });
+console.log(customerInfo,'customerInfoquotes')
     let tabDetails = "active";
     let tabCustInfo = null;
     let tabShipInfo = null;
@@ -51,7 +53,7 @@ function Quotes(props) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ quoteDetails,relatedCustomer:customerInfo.companyId,tier:customerTier.multiplier, type: type, quoteNum: quoteNumber })
+            body: JSON.stringify({ quoteDetails,relatedCustomer:customerInfo.customerId,tier:customerTier.multiplier, type: type, quoteNum: quoteNumber })
         }).then(res => res.json())
             .then(res => {
                 console.log(res, 'savequote')
