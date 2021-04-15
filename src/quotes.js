@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {useLocation} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import "./css/quotes.css";
 import "./css/side-list.css";
 import "./css/navbar.css";
@@ -22,7 +22,9 @@ import FileUpload from "./fileUpload";
 import Notes from "./notes";
 
 function Quotes(props) {
-    const quotenum=new URLSearchParams(useLocation().search).get('quoteNum')
+    const { quoteNumberParams } = useParams();
+
+    console.log(quoteNumberParams,"quoteNumberParams")
     const [tabType, setTabType] = useState("quoteDetails");
     const [quoteDetails, setQuoteDetails] = useState([]);
     let [customerTier, setCustomerTier] = useState({ multiplier: 1 });
@@ -107,7 +109,26 @@ console.log(customerInfo,'customerInfoquotes')
 
 
 
-
+    useEffect(() => {
+       if(quoteDetails.length<1){
+        fetch(`${global.config.host}/loadQuote`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({id:quoteNumberParams})
+        }).then(res => res.json())
+            .then(res => {
+                
+    console.log(res,'res')
+               
+              
+               setSupplierSelected(res[0].supplierId)
+    
+    
+            });
+        }
+    }, [])
 
 
  

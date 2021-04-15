@@ -37,7 +37,7 @@ function CustomerInfo(props) {
 
     function handleClick(quoteNum){
         history.push({
-            pathname:  `/quotes?quoteNum=${quoteNum}`,
+            pathname:  `/quotes/${quoteNum}`,
             
          });
     };
