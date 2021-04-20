@@ -11,7 +11,7 @@ function NewCustomer(props) {
 
     const mySubmitHandler = (event) => {
         event.preventDefault();
-      
+
 
         fetch(`${global.config.host}/customerDetail`, {
             method: 'POST',
@@ -22,11 +22,11 @@ function NewCustomer(props) {
         }).then(res => res.json())
             .then(res => {
 
-const id=res[0].insertId;
-                console.log(res,'the Customer Response')
-                const temp={customerId:id,...data}
+                const id = res[0].insertId;
+                console.log(res, 'the Customer Response')
+                const temp = { customerId: id, ...data }
 
-                console.log(temp,'temp')
+                console.log(temp, 'temp')
 
                 props.setCustomerInfo(temp)
 
@@ -34,7 +34,7 @@ const id=res[0].insertId;
 
             });
 
-        
+
     }
 
 

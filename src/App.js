@@ -32,7 +32,7 @@ console.log('hell')
       </Switch>
       
       <Route path="/quotes/:quoteNumberParams" component={Quotes} />
-      <Route path="/quotes" component={Quotes} />
+     
       <Route path="/customers" component={Customers} />
       
 

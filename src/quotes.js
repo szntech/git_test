@@ -40,6 +40,7 @@ console.log(customerInfo,'customerInfoquotes')
     let tabShipInfo = null;
     let tabFileUpload = null;
     let tabNotes = null;
+    let [onMount, setnMount] = useState(null);
 
 
     let tabContent;
@@ -110,7 +111,9 @@ console.log(customerInfo,'customerInfoquotes')
 
 
     useEffect(() => {
-       if(quoteDetails.length<1){
+
+        console.log("in the fetch")
+      
         fetch(`${global.config.host}/loadQuote`, {
             method: 'POST',
             headers: {
@@ -121,13 +124,19 @@ console.log(customerInfo,'customerInfoquotes')
             .then(res => {
                 
     console.log(res,'res')
-               
+    
               
-               setSupplierSelected(res[0].supplierId)
-    
-    
+           //    setSupplierSelected(res[0].supplierId)
+
+
+
+           
+           console.log(res[0].supplierId,'res[0].supplierId')
+
+           setSupplierSelected({id:res[0].supplierId})
+           setQuoteDetails(res)
             });
-        }
+       
     }, [])
 
 

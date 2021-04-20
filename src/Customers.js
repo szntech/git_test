@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import "./css/side-list.css";
 import "./css/navbar.css";
 import "./css/customer.css";
-import CustomersInfo from "./customerInfo";
+import CustomersInfo from "./customerSelected_customerpage";
 import { FontAwesomeIcon, i } from '@fortawesome/react-fontawesome'
 import { faCoffee, fas, faTimes, faHome, faUsers, faCaretDown, faPlus, faSearch, faEdit, faTrash, faEllipsisH } from '@fortawesome/free-solid-svg-icons'
 

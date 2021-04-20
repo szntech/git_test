@@ -39,7 +39,7 @@ function QuoteDetailsF(props) {
     let [colorGray, setColorGray] = useState("colorGray")
 
 
-    useEffect(() => {
+    /*useEffect(() => {
 
 
 
@@ -73,7 +73,7 @@ function QuoteDetailsF(props) {
 
 
 
-    }, [supplierIds])
+    }, [supplierIds])*/
 
 
 
