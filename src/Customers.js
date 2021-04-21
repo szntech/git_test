@@ -40,7 +40,7 @@ const displayCustomers=searchResults.length>0?searchResults:customers;
 
     console.log(results)
 
-    const filtered=customers.filter(customer=>customer.CompanyName.includes(results))
+    const filtered=customers.filter(customer=>customer.companyName.includes(results))
     console.log(filtered,'filtered')
     setSearchResults(filtered)
   }
@@ -87,7 +87,7 @@ const displayCustomers=searchResults.length>0?searchResults:customers;
                     className="side-list-item customer-item py-3 px-2 border-top d-flex align-items-center"
                   >
                     <div className="ms-3">
-                      <h4>{customer.CompanyName}</h4>
+                      <h4>{customer.companyName}</h4>
                       <p className="date w-100 d-block">Jan 13, 2021</p>
                     </div>
                     <div className="dots ms-auto align-self-start">

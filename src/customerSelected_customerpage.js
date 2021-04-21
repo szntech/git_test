@@ -49,7 +49,7 @@ function CustomerSelected(props) {
             {/* Customers Info */}
             <div className="customers-info bg-white">
                 {/* Customer Details */ console.log('got here')}
-                <CustomerInfo customerInfo={customerInfo}></CustomerInfo>
+                <CustomerInfo setCustomerInfo={setCustomerInfo} customerInfo={customerInfo}></CustomerInfo>
                 {/* Customer Quotes */}
                <QuoteInfo quotesInfo={quotesInfo}></QuoteInfo>
             </div>
