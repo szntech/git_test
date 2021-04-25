@@ -8,7 +8,7 @@ import QuoteInfo from "./quoteinfo_customerpage"
 
 function CustomerSelected(props) {
 
-    const [customerInfo, setCustomerInfo] = useState({ FirstName: "", LastName: "", City: "", state: "", postalCode: "", workPhone: "", email: "",companyName:"" });
+    const [customerInfo, setCustomerInfo] = useState({ firstName: "", lastName: "", city: "", state: "", postalCode: "", workPhone: "", email: "",companyName:"",address:"",phoneNumber:"",cellNumber:"" });
     const [quotesInfo, setQuotesInfo] = useState([]);
 
 
