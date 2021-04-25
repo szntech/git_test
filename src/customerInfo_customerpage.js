@@ -32,27 +32,18 @@ function CustomerInfoPage(props) {
         event.preventDefault();
         setEdit(false)
 
-        /*fetch(`${global.config.host}/customerDetail`, {
+        fetch(`${global.config.host}/updateCustomer`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(customerInfoEdit)
         }).then(res => res.json())
             .then(res => {
 
-                const id = res[0].insertId;
-                console.log(res, 'the Customer Response')
-                const temp = { customerId: id, ...data }
-
-                console.log(temp, 'temp')
-
-                props.setCustomerInfo(temp)
-
-                props.setEdit('complete')
+                setCustomerInfo(customerInfoEdit)
 
             });
-*/
 
     }
 
@@ -64,6 +55,36 @@ function CustomerInfoPage(props) {
                     <p>{`${customerInfo.firstName} ${customerInfo.lastName}`}</p>
                 </div>
                 <div className="d-flex align-items-center my-2">
+                    <h6>Company Name</h6>
+                    <p>{`${customerInfo.companyName}`}</p>
+                </div>
+                
+                <div className="d-flex align-items-center my-2">
+                    <h6>Phone Number</h6>
+                    <p>{`${customerInfo.phoneNumber}`}</p>
+                </div>
+
+                <div className="d-flex align-items-center my-2">
+                    <h6>Cell Number</h6>
+                    <p>{`${customerInfo.cellNumber}`}</p>
+                </div>
+                <div className="d-flex align-items-center my-2">
+                    <h6>email</h6>
+                    <p>{`${customerInfo.email}`}</p>
+                </div>
+            </div>
+        </div>
+        <div className="col-6">
+            <div className="details">
+            <div className="d-flex align-items-center my-2">
+                    <h6>Last Name</h6>
+                    <p>{`${customerInfo.lastName}`}</p>
+                </div>
+                <div className="d-flex align-items-center my-2">
+                    <h6>Address</h6>
+                    <p>{`${customerInfo.address}`}</p>
+                </div>
+                <div className="d-flex align-items-center my-2">
                     <h6>City</h6>
                     <p>{`${customerInfo.city}`}</p>
                 </div>
@@ -71,22 +92,9 @@ function CustomerInfoPage(props) {
                     <h6>State</h6>
                     <p>{`${customerInfo.state}`}</p>
                 </div>
-
                 <div className="d-flex align-items-center my-2">
-                    <h6>Zipcode</h6>
+                    <h6>Postal Code</h6>
                     <p>{`${customerInfo.postalCode}`}</p>
-                </div>
-            </div>
-        </div>
-        <div className="col-6">
-            <div className="details">
-                <div className="d-flex align-items-center my-2">
-                    <h6>Phone</h6>
-                    <p>{`${customerInfo.phoneNumber}`}</p>
-                </div>
-                <div className="d-flex align-items-center my-2">
-                    <h6>Email</h6>
-                    <p>{`${customerInfo.email}`}</p>
                 </div>
             </div>
         </div>
@@ -147,7 +155,7 @@ function CustomerInfoPage(props) {
         />
         <input
             type="text"
-            name="City"
+            name="city"
             placeholder="City"
             className="border-0 p-2 new-quote-new-customer-input ms-3"
             value={customerInfoEdit.city}
@@ -191,7 +199,7 @@ function CustomerInfoPage(props) {
         <input
             type="text"
             placeholder="postalCode"
-            name="zipcode"
+            name="postalCode"
             className="border-0 p-2 new-quote-new-customer-input ms-3"
             value={customerInfoEdit.postalCode}
             onChange={myChangeHandler}
@@ -201,20 +209,22 @@ function CustomerInfoPage(props) {
 
 
         <br /><br />
-        <input type='submit' className="btn btn-primary px-5 py-2 me-3 d-block mt-3" value="Confirm"></input>
+        <input type='submit' className="btn btn-primary px-5 py-2 me-3  mt-3" value="Confirm"></input>
+        <input type='button' className="btn btn-danger px-5 py-2 me-3  mt-3" value="Cancel" onClick={()=>setEdit(false)}></input>
     </form>
     return (
         <>
 
             <div className="customer-details">
                 <div className="d-flex align-items-center">
-                    <h4>Quibic Company</h4>
-                    {!edit && <button className="btn btn-outline-danger ms-2 py-1 px-3" onClick={() => {
+                    <h4>{`${customerInfo.companyName.toUpperCase()}`}</h4>
+                    {!edit && <button className="btn btn-outline-danger ms-4 py-1 px-" onClick={() => {
                         setEdit(!edit);
                         setCustomerInfoEdit(customerInfo)
                     }}>
                         {buttonText}
                     </button>}
+                    
                 </div>
                 {display}
             </div>

@@ -83,7 +83,7 @@ const displayCustomers=searchResults.length>0?searchResults:customers;
 
                 {displayCustomers.map((customer) => {
 
-                  return (<div onClick={()=>setSelectedCustomer(customer.RelatedCustomer)}
+                  return (<div onClick={()=>setSelectedCustomer(customer)}
                     className="side-list-item customer-item py-3 px-2 border-top d-flex align-items-center"
                   >
                     <div className="ms-3">

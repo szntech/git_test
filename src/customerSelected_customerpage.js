@@ -8,7 +8,7 @@ import QuoteInfo from "./quoteinfo_customerpage"
 
 function CustomerSelected(props) {
 
-    const [customerInfo, setCustomerInfo] = useState({ FirstName: "", LastName: "", City: "", state: "", postalCode: "", workPhone: "", email: "" });
+    const [customerInfo, setCustomerInfo] = useState({ FirstName: "", LastName: "", City: "", state: "", postalCode: "", workPhone: "", email: "",companyName:"" });
     const [quotesInfo, setQuotesInfo] = useState([]);
 
 
@@ -18,7 +18,7 @@ function CustomerSelected(props) {
     useEffect(() => {
         if (props.selectedCustomer !== null) {
             console.log(props.selectedCustomer, 'props.selectedCustomer')
-            fetch(`${global.config.host}/customerInfo?relatedCustomer=${props.selectedCustomer}`, {
+            fetch(`${global.config.host}/customerInfo?relatedCustomer=${props.selectedCustomer.RelatedCustomer}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
