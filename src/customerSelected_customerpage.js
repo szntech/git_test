@@ -8,7 +8,7 @@ import QuoteInfo from "./quoteinfo_customerpage"
 
 function CustomerSelected(props) {
 
-    const [customerInfo, setCustomerInfo] = useState({ firstName: "", lastName: "", city: "", state: "", postalCode: "", workPhone: "", email: "",companyName:"",address:"",phoneNumber:"",cellNumber:"" });
+    const [customerInfo, setCustomerInfo] = useState({ firstName: "", lastName: "", city: "", state: "", postalCode: "", workPhone: "", email: "", companyName: "", address: "", phoneNumber: "", cellNumber: "" });
     const [quotesInfo, setQuotesInfo] = useState([]);
 
 
@@ -16,28 +16,37 @@ function CustomerSelected(props) {
     console.log(props.selectedCustomer, 'props.selectedCustomer')
 
     useEffect(() => {
-        if (props.selectedCustomer !== null) {
-            console.log(props.selectedCustomer, 'props.selectedCustomer')
-            fetch(`${global.config.host}/customerInfo?relatedCustomer=${props.selectedCustomer.RelatedCustomer}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
 
-            }).then(res => res.json())
-                .then(res => {
+       
+        if (props.selectedCustomer === "newCustomer") {
 
-                    console.log(res, 'customers')
-                    setCustomerInfo(res.customerInfo[0])
-                    setQuotesInfo(res.quotesInfo)
-                    console.log(customerInfo, 'customerInfo')
+            console.log(props.selectedCustomer,'props.selectedCustomer')
+            setCustomerInfo({ firstName: "", lastName: "", city: "", state: "", postalCode: "", workPhone: "", email: "", companyName: "", address: "", phoneNumber: "", cellNumber: "" });
+            setQuotesInfo([])
+        } else
 
-                })
-        }
+            if (props.selectedCustomer !== null) {
+                console.log(props.selectedCustomer, 'props.selectedCustomer')
+                fetch(`${global.config.host}/customerInfo?relatedCustomer=${props.selectedCustomer.RelatedCustomer}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+
+                }).then(res => res.json())
+                    .then(res => {
+
+                        console.log(res, 'customers')
+                        setCustomerInfo(res.customerInfo[0])
+                        setQuotesInfo(res.quotesInfo)
+                        console.log(customerInfo, 'customerInfo')
+
+                    })
+            }
     }, [props.selectedCustomer])
     const history = useHistory();
 
-    
+
 
 
     return (<>
@@ -49,9 +58,9 @@ function CustomerSelected(props) {
             {/* Customers Info */}
             <div className="customers-info bg-white">
                 {/* Customer Details */ console.log('got here')}
-                <CustomerInfo setCustomerInfo={setCustomerInfo} customerInfo={customerInfo}></CustomerInfo>
+                <CustomerInfo refreshCustomerList={props.refreshCustomerList} setRefreshCustomerList={props.setRefreshCustomerList} setSelectedCustomer={props.setSelectedCustomer} selectedCustomer={props.selectedCustomer} setShowEdit={props.setShowEdit} showEdit={props.showEdit} setCustomerInfo={setCustomerInfo} customerInfo={customerInfo}></CustomerInfo>
                 {/* Customer Quotes */}
-               <QuoteInfo quotesInfo={quotesInfo}></QuoteInfo>
+                <QuoteInfo selectedCustomer={props.selectedCustomer}  quotesInfo={quotesInfo}></QuoteInfo>
             </div>
         </div>
 

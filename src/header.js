@@ -40,7 +40,7 @@ function Header(props) {
                                 <Link
                                     className="nav-link active d-flex align-items-center"
                                     aria-current="page"
-                                    to="home"
+                                    to="/home"
                                 ><i><FontAwesomeIcon icon={fas, faHome} /></i><span>Home</span></Link
                                 >
                             </li>

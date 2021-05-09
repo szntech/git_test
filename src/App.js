@@ -31,9 +31,9 @@ console.log('hell')
         <Route path="/" component={myHeader} />
       </Switch>
       
-      <Route path="/quotes/:quoteNumberParams" component={Quotes} />
+      <Route path="/quotes/" component={Quotes} />
      
-      <Route path="/customers" component={Customers} />
+      <Route path="/customers/:type" component={Customers} />
       
 
     </Router>

@@ -8,9 +8,13 @@ import "./css/customer.css";
 
 function CustomerInfoPage(props) {
 
-    const { customerInfo, setCustomerInfo } = props;
+    const { customerInfo, setCustomerInfo,setShowEdit,showEdit} = props;
 
-    const [edit, setEdit] = useState(false);
+    console.log(props.selectedCustomer,"props.selectedCustomer")
+
+    
+
+    
     const [customerInfoEdit, setCustomerInfoEdit] = useState(customerInfo);
     const [buttonText, setButtonText] = useState('Edit');
 
@@ -18,7 +22,7 @@ function CustomerInfoPage(props) {
     const myChangeHandler = (event) => {
         let nam = event.target.name;
         let val = event.target.value;
-        const tempData = { ...customerInfo };
+        const tempData = { ...customerInfoEdit };
         tempData[nam] = val;
 
         setCustomerInfoEdit(tempData);
@@ -27,10 +31,37 @@ function CustomerInfoPage(props) {
     }
 
 
+    useEffect(()=>{
+        setCustomerInfoEdit(customerInfo)
+    },[showEdit,customerInfo])
+
+    
 
     const mySubmitHandler = (event) => {
         event.preventDefault();
-        setEdit(false)
+
+
+        if(props.selectedCustomer==="newCustomer"){
+         
+            fetch(`${global.config.host}/customerDetail`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(customerInfoEdit)
+            }).then(res => res.json())
+                .then(res => {
+    
+                    setCustomerInfo(customerInfoEdit)
+                    setShowEdit(false)
+                    props.setSelectedCustomer({RelatedCustomer:res[0].insertId})
+                    props.setRefreshCustomerList(!props.refreshCustomerList)
+                });
+         
+
+
+        }else{
+        
 
         fetch(`${global.config.host}/updateCustomer`, {
             method: 'POST',
@@ -42,12 +73,12 @@ function CustomerInfoPage(props) {
             .then(res => {
 
                 setCustomerInfo(customerInfoEdit)
-
+                setShowEdit(false)
             });
-
+        }
     }
 
-    const display = edit === false ? <div className="row mt-4">
+    const display = showEdit === false ? <div className="row mt-4">
         <div className="col-6">
             <div className="details">
                 <div className="d-flex align-items-center my-2">
@@ -210,7 +241,9 @@ function CustomerInfoPage(props) {
 
         <br /><br />
         <input type='submit' className="btn btn-primary px-5 py-2 me-3  mt-3" value="Confirm"></input>
-        <input type='button' className="btn btn-danger px-5 py-2 me-3  mt-3" value="Cancel" onClick={()=>setEdit(false)}></input>
+        <input type='button' className="btn btn-danger px-5 py-2 me-3  mt-3" value="Cancel" onClick={()=>{
+            setShowEdit(false)
+           }}></input>
     </form>
     return (
         <>
@@ -218,8 +251,8 @@ function CustomerInfoPage(props) {
             <div className="customer-details">
                 <div className="d-flex align-items-center">
                     <h4>{`${customerInfo.companyName.toUpperCase()}`}</h4>
-                    {!edit && <button className="btn btn-outline-danger ms-4 py-1 px-" onClick={() => {
-                        setEdit(!edit);
+                    {!showEdit && props.selectedCustomer!==null&& <button className="btn btn-outline-danger ms-4 py-1 px-" onClick={() => {
+                        setShowEdit(!showEdit);
                         setCustomerInfoEdit(customerInfo)
                     }}>
                         {buttonText}

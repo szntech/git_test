@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from "react-router-dom";
 import "./css/side-list.css";
 import "./css/navbar.css";
 import "./css/customer.css";
@@ -9,9 +10,16 @@ import { faCoffee, fas, faTimes, faHome, faUsers, faCaretDown, faPlus, faSearch,
 
 function Customers(props) {
 
+  const {type}=useParams()
+
+  const intialSelectedCustomer=type==="all"?null:"newCustomer";
+  const displayMode=type==="all"?false:true;
+
   const [customers, setCustomers] = useState([]);
   const [searchResults,setSearchResults]=useState([]);
-  const [selectedCustomer,setSelectedCustomer]= useState(null);
+  const [selectedCustomer,setSelectedCustomer]= useState(intialSelectedCustomer);
+  const [refreshCustomerList,setRefreshCustomerList]= useState(true);
+const [showEdit,setShowEdit]=useState(displayMode)
 console.log(selectedCustomer,'selectedCustomer')
 
 const displayCustomers=searchResults.length>0?searchResults:customers;
@@ -29,11 +37,15 @@ const displayCustomers=searchResults.length>0?searchResults:customers;
       .then(res => {
 
         console.log(res, 'customers')
-        setCustomers(res)
+       const sorted= res.sort((a, b) => b.id - a.id);
+
+       console.log(sorted,'sorted')
+       
+        setCustomers(sorted)
 
       })
 
-  }, [])
+  }, [refreshCustomerList])
 
 
   function handleSearchChange(results) {
@@ -45,9 +57,12 @@ const displayCustomers=searchResults.length>0?searchResults:customers;
     setSearchResults(filtered)
   }
 
+
+  
+
   return (<>
 
-    <section className="customer-section">
+    <section className="customer-section" >
       <div className="container">
         <div className="row">
           {/* Side List Item */}
@@ -55,12 +70,21 @@ const displayCustomers=searchResults.length>0?searchResults:customers;
             <div className="side-list-box customer-box">
               {/* Select and Plus Button */}
               <div className="px-3 pt-3 d-flex align-items-center">
-                <h4>All Customers</h4>
-                <button className="add-btn border-0 ms-auto">
+                <h4 >All Customers</h4>
+                
+                <button className="add-btn border-0 ms-auto" onClick={()=>{
+                  setShowEdit(true)
+                  setSelectedCustomer("newCustomer")
+                  }}>
+               
                   <FontAwesomeIcon icon={fas, faPlus} />
                 </button>
               </div>
+
+             
               {/* Search */}
+              
+              
               <div className="px-3">
                 <form
                   action="javascript:void(0)"
@@ -102,7 +126,7 @@ const displayCustomers=searchResults.length>0?searchResults:customers;
             </div>
           </div>
           {/* Customers Information */}
-          <CustomersInfo selectedCustomer={selectedCustomer}></CustomersInfo>
+          <CustomersInfo setRefreshCustomerList={setRefreshCustomerList} refreshCustomerList={refreshCustomerList} setSelectedCustomer={setSelectedCustomer} selectedCustomer={selectedCustomer} setShowEdit={setShowEdit} showEdit={showEdit}></CustomersInfo>
         </div>
       </div>
     </section>

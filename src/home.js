@@ -57,7 +57,7 @@ function Home(props) {
     <h5 classNameName="mt-3" onClick={() => setCustomerButton(false)}>Customers</h5>
   </div> :
     <div className="card-buttons w-100 h-100">
-      <Link className="w-100 d-flex align-items-center justify-content-center" to="/addCustomer" >
+      <Link className="w-100 d-flex align-items-center justify-content-center" to="/Customers/add" >
         <img
           src={imgCircle}
           alt="quotes"
@@ -68,7 +68,7 @@ function Home(props) {
 
       <Link
         className="w-100 d-flex align-items-center justify-content-center mt-4"
-        to="/customers"
+        to="/customers/all"
       ><img
           src={allCustomerImg}
           alt="quotes"
@@ -83,7 +83,7 @@ function Home(props) {
         className="navbar navbar-expand-lg py-4 align-items-center position-absolute w-100"
       >
         <div className="container">
-          <Link className="navbar-brand" to="home"
+          <Link className="navbar-brand" to="/home"
           ><img src={Logo} alt="logo" className="img-fluid"
             /></Link>
           <div className="collapse navbar-collapse align-items-center">
