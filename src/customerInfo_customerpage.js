@@ -178,7 +178,7 @@ function CustomerInfoPage(props) {
 
         <input
             type="text"
-            name="workPhone"
+            name="phoneNumber"
             placeholder="Phone number"
             className="border-0 p-2 new-quote-new-customer-input"
             value={customerInfoEdit.phoneNumber}
@@ -198,7 +198,7 @@ function CustomerInfoPage(props) {
 
         <input
             type="text"
-            name="cellPhone"
+            name="cellNumber"
             placeholder="cell number"
             className="border-0 p-2 new-quote-new-customer-input"
             value={customerInfoEdit.cellNumber}
