@@ -22,18 +22,34 @@ import FileUpload from "./fileUpload";
 import Notes from "./notes";
 
 function Quotes(props) {
-    const { quoteNumberParams } = useParams();
+    //getting the quote id from the params
+    const {idParam} = useParams();
+    const id =parseInt(idParam)
 
-    console.log(quoteNumberParams,"quoteNumberParams")
+    // controlls which tab to display 
     const [tabType, setTabType] = useState("quoteDetails");
+
+    //Quote 
+    const [quoteNumber, setQuoteNumber] = useState(id);
     const [quoteDetails, setQuoteDetails] = useState([]);
-    let [customerTier, setCustomerTier] = useState({ multiplier: 1 });
-    const [totalPrice, setTotalPrice] = useState(0);
+    const [quoteNotes,setQuoteNotes]=useState([]);
+    const [customerId,setCustomer]= useState(null);
+    const [customerInfo, setCustomerInfo] = useState({ customerId:null,companyName: "", zipcode: null, firstName: "",lastName:"", phoneNumber: null,cellNumber:null, state: "", email: "", city: "" });
+    const [shippingInfo,setShippingInfo]= useState({});
+    const [files,setfiles]= useState([]);
+    const [customerTier, setCustomerTier] = useState({ multiplier: 1 });
+    const [supplierSelected,setSupplierSelected]=useState([]);
+    const [skuSelected,setSkuSelected]=useState([]);
+    
+    // catalog
     const [catalog, setCatalog] = useState([]);
-    let [counter, setCounter] = useState(1);
-    let [supplierSelected, setSupplierSelected] = useState(null);
-    let [quoteNumber, setQuoteNumber] = useState(null);
-    let [customerInfo, setCustomerInfo] = useState({ customerId:null,companyName: "", zipcode: null, firstName: "",lastName:"", phoneNumber: null,cellNumber:null, state: "", email: "", city: "" });
+    
+    // price count
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [counter, setCounter] = useState(1);
+    
+    
+    
 console.log(customerInfo,'customerInfoquotes')
     let tabDetails = "active";
     let tabCustInfo = null;
@@ -110,16 +126,18 @@ console.log(customerInfo,'customerInfoquotes')
 
 
 
-    useEffect(() => {
+   /* useEffect(() => {
 
-        console.log("in the fetch")
+        if(id!==0){
+
+        
       
         fetch(`${global.config.host}/loadQuote`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({id:quoteNumberParams})
+            body: JSON.stringify({id:id})
         }).then(res => res.json())
             .then(res => {
                 
@@ -136,11 +154,35 @@ console.log(customerInfo,'customerInfoquotes')
            setSupplierSelected({id:res[0].supplierId})
            setQuoteDetails(res)
             });
-       
-    }, [])
+        }
+    }, [])*/
 
+    useEffect(() => {
+        
 
- 
+           
+    
+                fetch(`${global.config.host}/catalog`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+    
+                }).then(res => res.json())
+                    .then(res => {
+                        console.log(res,'suppliers')
+                        setCatalog(res)
+    
+    
+    
+    
+                    });
+    
+           
+    
+        
+
+    },[])
     useEffect(() => {
         let count = 0
         quoteDetails.forEach((detail) => {

@@ -37,7 +37,7 @@ function Home(props) {
       </Link>
       <Link
         className="w-100 d-flex align-items-center justify-content-center mt-4"
-        to="quotes"
+        to="quotes/0"
       ><img
           src={AllQuotesImg}
           alt="quotes"
