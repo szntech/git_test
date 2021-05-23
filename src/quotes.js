@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "./css/quotes.css";
 import "./css/side-list.css";
 import "./css/navbar.css";
@@ -23,34 +23,38 @@ import Notes from "./notes";
 
 function Quotes(props) {
     //getting the quote id from the params
-    const {idParam} = useParams();
-    const id =parseInt(idParam)
+    const { quoteid } = useParams();
 
+    console.log(quoteid ,"idParam")
+    const id = parseInt(quoteid)
+
+
+   
     // controlls which tab to display 
     const [tabType, setTabType] = useState("quoteDetails");
 
     //Quote 
-    const [quoteNumber, setQuoteNumber] = useState(id);
+    const [quoteNumber, setQuoteNumber] = useState(null);
+
     const [quoteDetails, setQuoteDetails] = useState([]);
-    const [quoteNotes,setQuoteNotes]=useState([]);
-    const [customerId,setCustomer]= useState(null);
-    const [customerInfo, setCustomerInfo] = useState({ customerId:null,companyName: "", zipcode: null, firstName: "",lastName:"", phoneNumber: null,cellNumber:null, state: "", email: "", city: "" });
-    const [shippingInfo,setShippingInfo]= useState({});
-    const [files,setfiles]= useState([]);
+    const [quoteNotes, setQuoteNotes] = useState([]);
+    const [customerId, setCustomer] = useState(null);
+    const [customerInfo, setCustomerInfo] = useState({ customerId: null, companyName: "", zipcode: null, firstName: "", lastName: "", phoneNumber: null, cellNumber: null, state: "", email: "", city: "" });
+    const [shippingInfo, setShippingInfo] = useState({});
+    const [files, setfiles] = useState([]);
     const [customerTier, setCustomerTier] = useState({ multiplier: 1 });
-    const [supplierSelected,setSupplierSelected]=useState([]);
-    const [skuSelected,setSkuSelected]=useState([]);
-    
-    // catalog
-    const [catalog, setCatalog] = useState([]);
-    
+    const [supplierSelected, setSupplierSelected] = useState(null);
+    const [skuSelected, setSkuSelected] = useState([]);
+
+  
+
     // price count
     const [totalPrice, setTotalPrice] = useState(0);
     const [counter, setCounter] = useState(1);
+
     
-    
-    
-console.log(customerInfo,'customerInfoquotes')
+
+    console.log(customerInfo, 'customerInfoquotes')
     let tabDetails = "active";
     let tabCustInfo = null;
     let tabShipInfo = null;
@@ -60,11 +64,11 @@ console.log(customerInfo,'customerInfoquotes')
 
 
     let tabContent;
- 
+
     const saveQuote = (type) => {
-        
-        if(type==="update"&&quoteNumber===null){
-            type="insert";
+
+        if (type === "update" && quoteNumber === null) {
+            type = "insert";
         }
 
         fetch(`${global.config.host}/savequote`, {
@@ -72,27 +76,27 @@ console.log(customerInfo,'customerInfoquotes')
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ quoteDetails,relatedCustomer:customerInfo.customerId,tier:customerTier.multiplier, type: type, quoteNum: quoteNumber })
+            body: JSON.stringify({ quoteDetails, relatedCustomer: customerInfo.customerId, tier: customerTier.multiplier, type: type, quoteNum: quoteNumber,supplierSelected:supplierSelected.id,skuSelected })
         }).then(res => res.json())
             .then(res => {
                 console.log(res, 'savequote')
-    
+
                 if (res.type === "insert") {
                     setQuoteNumber(res.query[0].insertId)
                 }
-    
-    
-    
-    
+
+
+
+
             });
-        }
+    }
     if (tabType === "quoteDetails") {
         tabDetails = "active";
         tabCustInfo = null;
         tabShipInfo = null;
         tabFileUpload = null;
         tabNotes = null;
-        tabContent = <QuoteDetails supplierSelected={supplierSelected} saveQuote={saveQuote} setSupplierSelected={setSupplierSelected} counter={counter} setCounter={setCounter} catalog={catalog} setCatalog={setCatalog} customerTier={customerTier} totalPrice={totalPrice} quoteDetails={quoteDetails} setQuoteNumber setQuoteDetails={setQuoteDetails}></QuoteDetails>
+        tabContent = <QuoteDetails setSkuSelected={setSkuSelected} skuSelected={skuSelected} supplierSelected={supplierSelected} saveQuote={saveQuote} setSupplierSelected={setSupplierSelected} counter={counter} setCounter={setCounter}  customerTier={customerTier} totalPrice={totalPrice} quoteDetails={quoteDetails} setQuoteNumber setQuoteDetails={setQuoteDetails}></QuoteDetails>
     } else if (tabType === "cutomerInfo") {
         tabDetails = null;
         tabCustInfo = "active";
@@ -126,63 +130,39 @@ console.log(customerInfo,'customerInfoquotes')
 
 
 
-   /* useEffect(() => {
+     useEffect(() => {
+        console.log(id,'id')
+         if(id!==0){
+ 
+         
+       
+         fetch(`${global.config.host}/loadQuote`, {
+             method: 'POST',
+             headers: {
+                 'Content-Type': 'application/json'
+             },
+             body: JSON.stringify({id:id})
+         }).then(res => res.json())
+             .then(res => {
+                 
+     console.log(res,'res')
+     
+               
+            //    setSupplierSelected(res[0].supplierId)
+ 
+ 
+ 
+            
+            console.log(res[0].supplierId,'res[0].supplierId')
+ 
+            setSupplierSelected({id:res[1][0].supplierSelected})
+            setSkuSelected(res[1][0].skuSelected)
+            setQuoteDetails(res[0])
+             });
+         }
+     }, [])
 
-        if(id!==0){
-
-        
-      
-        fetch(`${global.config.host}/loadQuote`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({id:id})
-        }).then(res => res.json())
-            .then(res => {
-                
-    console.log(res,'res')
     
-              
-           //    setSupplierSelected(res[0].supplierId)
-
-
-
-           
-           console.log(res[0].supplierId,'res[0].supplierId')
-
-           setSupplierSelected({id:res[0].supplierId})
-           setQuoteDetails(res)
-            });
-        }
-    }, [])*/
-
-    useEffect(() => {
-        
-
-           
-    
-                fetch(`${global.config.host}/catalog`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-    
-                }).then(res => res.json())
-                    .then(res => {
-                        console.log(res,'suppliers')
-                        setCatalog(res)
-    
-    
-    
-    
-                    });
-    
-           
-    
-        
-
-    },[])
     useEffect(() => {
         let count = 0
         quoteDetails.forEach((detail) => {

@@ -25,55 +25,44 @@ import { faCoffee, fas, faTimes, faHome, faUsers, faCaretDown, faPlus, faSearch,
 import SideNotePanel from "./sideNotePanel";
 function QuoteDetailsF(props) {
 
-    let{quoteDetails,setQuoteDetails,totalPrice,customerTier,catalog,setCatalog,counter,setCounter,setSupplierSelected,supplierSelected}=props
+    let{quoteDetails,setSkuSelected,skuSelected,setQuoteDetails,totalPrice,customerTier,counter,setCounter,setSupplierSelected,supplierSelected}=props
 
+    const [catalog, setCatalog] = useState([]);
+   
    
     const [suppliers, setSuppliers] = useState([]);
     
    
     const [supplierIds, setSupplierIds] = useState([]);
     
-    const [skuSelected, setSkuSelected] = useState(null);
+    
    
     
     let [colorGray, setColorGray] = useState("colorGray")
 
 
-    /*useEffect(() => {
+    useEffect(() => {
 
 
 
 
+        fetch(`${global.config.host}/catalog`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
 
-
-
-        if (supplierIds.length > 0) {
-
-
-
-            fetch(`${global.config.host}/catalog`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(supplierIds)
-            }).then(res => res.json())
-                .then(res => {
-                    console.log(res, 'catalog')
-                    setCatalog(res)
+        }).then(res => res.json())
+            .then(res => {
+                console.log(res, 'catalog')
+                setCatalog(res)
 
 
 
 
-                });
+            });
 
-
-        }
-
-
-
-
-    }, [supplierIds])*/
+    }, [])
 
 
 
@@ -85,6 +74,8 @@ function QuoteDetailsF(props) {
     }
 
     function handleSupplierChange(supplier) {
+
+        console.log(supplier,"supplier")
 
         setSupplierSelected(supplier)
 
@@ -118,7 +109,7 @@ function QuoteDetailsF(props) {
 
         console.log(found, 'found')
 
-        setSkuSelected(found)
+        setSkuSelected(found.sku)
 
         const newArray = quoteDetails.map((detail) => {
 
@@ -136,6 +127,7 @@ detail.description=found.description;
     }
 
     function handleItemChange(newValue, id) {
+        console.log(supplierSelected.id,skuSelected,'handleItemChange')
 
         const newArray = quoteDetails.map((detail) => {
 
@@ -146,7 +138,8 @@ detail.description=found.description;
 
                     console.log(element.item.toUpperCase().trim() === newValue.toUpperCase().trim())
                     if(!(skuSelected===null)){
-                        return element.item.toUpperCase().trim() == newValue.toUpperCase().trim()&&parseInt(element.relatedSupplier)===parseInt(supplierSelected.id)&&element.sku===skuSelected.sku;
+                        return element.item.toUpperCase().trim() == newValue.toUpperCase().trim()&&parseInt(element.relatedSupplier)===parseInt(supplierSelected.id)&&element.sku===skuSelected
+                        ;
                     }else{
                     return element.item.toUpperCase().trim() == newValue.toUpperCase().trim()&&parseInt(element.relatedSupplier)===parseInt(supplierSelected.id);
                     }
