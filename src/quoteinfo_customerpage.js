@@ -13,8 +13,8 @@ const {quotesInfo}=props;
 
 
 
-    function handleClick(quoteNum) {
-
+    function handleClick(e,quoteNum) {
+        console.log(e.target.checked,quoteNum)
         /* console.log('history clicked')
          history.push({
              pathname:  `/quotes/${quoteNum}`,
@@ -32,6 +32,13 @@ return(<>
                             className="btn btn-outline-primary ms-2 py-1 px-3"
                         >
                             Create new Quotes
+                  </a>
+
+                  <a
+                            href="create-quote.html"
+                            className="btn btn-outline-primary ms-2 py-1 px-3"
+                        >
+                            View Quote
                   </a>
                     </div>
                     {/* Table */}
@@ -56,16 +63,16 @@ return(<>
 
                             {quotesInfo.map((quote) => {
                                 return (
-                                    <tr onClick={() => handleClick(quote.id)}>
-                                        <Link to={`/quotes/${quote.id}`}>
+                                    <tr >
+                                        
                                             <td className="quote-title d-flex align-items-center">
                                                 <div className="round-checkbox me-4">
-                                                    <input type="checkbox" id="quote-title-checkbox-1" />
-                                                    <label for="quote-title-checkbox-1"></label>
+                                                    <input type="checkbox" id={`quote-title-checkbox-${quote.id}`} onClick={(e) => handleClick(e,quote.id)}/>
+                                                    <label for={`quote-title-checkbox-${quote.id}`}></label>
                                                 </div>
                                                 <span>Quote Title</span>
                                             </td>
-                                        </Link>
+                                        
                                         <td className="quote-number">
                                             <p className="master-mode">{`${quote.id}`}</p>
                                         </td>

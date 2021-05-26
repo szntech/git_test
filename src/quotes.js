@@ -28,13 +28,15 @@ function Quotes(props) {
     console.log(quoteid ,"idParam")
     const id = parseInt(quoteid)
 
+    const quoteNum=id >0?id:null
+
 
    
     // controlls which tab to display 
     const [tabType, setTabType] = useState("quoteDetails");
 
     //Quote 
-    const [quoteNumber, setQuoteNumber] = useState(null);
+    const [quoteNumber, setQuoteNumber] = useState(quoteNum);
 
     const [quoteDetails, setQuoteDetails] = useState([]);
     const [quoteNotes, setQuoteNotes] = useState([]);
